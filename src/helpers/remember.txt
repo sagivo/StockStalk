@@ -1,0 +1,33 @@
+#properties-table
+  width 100%
+  margin 0
+  color c2
+  thead
+    color c0
+    font-weight bold
+    display table
+    width 100%
+    table-layout fixed
+    background-color c2
+    tr
+      th
+        border none
+  tbody
+    display block
+    max-height 315px
+    overflow-y scroll
+    tr
+      display table
+      width 100%
+      table-layout fixed
+      td
+        padding 10px
+        a
+          color c2
+  td,th
+    &:nth-child(1)
+      width 70px
+    &:nth-child(4)
+      width 170px
+    &:nth-child(5)
+      width 170px

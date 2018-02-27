@@ -1,0 +1,168 @@
+html {
+  color: #040d14;
+  font-size: 14px;
+}
+html body {
+  font-family: Montserrat, sans-serif;
+}
+html body input[type=submit],
+html body button {
+  cursor: pointer;
+  background-color: #21ce99;
+  border: none;
+}
+html body h1 {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #21ce99;
+}
+.btn {
+  border-radius: 50px;
+}
+.btn-primary {
+  background-color: #21ce99;
+  border-color: #21ce99;
+}
+.btn-primary:hoverMainSettings {
+  background-color: #a398aa;
+  border-color: #a398aa;
+}
+#header {
+  margin: 10px;
+  color: #040d14;
+}
+#header #logo img {
+  height: 36px;
+}
+#header #update-version {
+  text-align: center;
+  padding: 10px;
+}
+#header #update-version a {
+  color: #21ce99;
+}
+#header li {
+  margin-left: 15px;
+  display: inline;
+  font-weight: bold;
+}
+#header a {
+  font-weight: normal;
+  color: #040d14;
+}
+#header #logo {
+  font-size: 26px;
+}
+#header #logo .summeryNum {
+  cursor: move;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  color: #040d14;
+  margin-left: 10px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+#header #today {
+  color: #040d14;
+  font-size: 12px;
+  margin-left: 55px;
+}
+#header #today.down {
+  color: #f00;
+}
+#header #today span {
+  margin-right: 5px;
+}
+.up {
+  color: #21ce99;
+}
+.down {
+  color: #f00;
+}
+.up img,
+.down img {
+  width: 12px;
+  margin-bottom: 5px;
+}
+#main-container {
+  margin: 0;
+  padding: 0;
+  height: 0;
+}
+#properties-table {
+  margin: 0;
+  color: #040d14;
+}
+#properties-table thead {
+  color: #040d14;
+  font-weight: bold;
+}
+#properties-table thead tr th {
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  border-top: none;
+}
+#properties-table tbody tr td {
+  padding: 10px;
+}
+#properties-table tbody tr td a {
+  color: #040d14;
+}
+#join-container {
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+  max-width: 400px;
+}
+#join-container #info {
+  font-size: 12px;
+}
+#join-container #join input {
+  margin: auto;
+  font-size: 16px;
+  margin-top: 10px;
+  width: 350px;
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+#join-container #join #login-error {
+  color: #f00;
+  margin-top: 10px;
+}
+#join-container #switch {
+  font-size: 12px;
+  margin-top: 5px;
+}
+#summery {
+  width: 100%;
+  text-align: center;
+  background-color: #21ce99;
+  border: 1px solid #21ce99;
+  color: #fff;
+  padding: 5px;
+}
+#summery .up,
+#summery .down {
+  color: #fff;
+}
+#settings {
+  margin-top: 10px;
+}
+#settings button {
+  margin-right: 10px;
+}
+#settings input[type=number] {
+  width: 50px;
+}
+#settings #setting-actions {
+  margin-top: 10px;
+}
+#settings div[disabled] {
+  color: #808080;
+}
+#settings #version {
+  margin-top: 10px;
+  font-size: 10px;
+  font-style: italic;
+}

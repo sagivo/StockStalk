@@ -1,0 +1,74 @@
+{
+  "name": "StockStalk",
+  "version": "0.0.1",
+  "author": "FOO BAR",
+  "private": true,
+  "description": "Your stocks on your desktop",
+  "license": "MIT",
+  "main": "build/electron-starter.js",
+  "homepage": "./",
+  "dependencies": {
+    "electron-context-menu": "*",
+    "electron-is-dev": "*",
+    "electron-positioner": "*",
+    "electron-updater": "^2.20.1",
+    "jimp": "oliver-moran/jimp",
+    "mobx": "*",
+    "mobx-persist": "*",
+    "mobx-react": "*",
+    "react": "*",
+    "react-countup": "*",
+    "react-dom": "*",
+    "request": "*",
+    "request-promise-native": "*"
+  },
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-preset-env": "*",
+    "babel-preset-es2015": "*",
+    "babel-preset-react": "*",
+    "babel-register": "*",
+    "concurrently": "^3.5.1",
+    "cross-spawn": "*",
+    "custom-react-scripts": "*",
+    "electron": "*",
+    "electron-builder": "*",
+    "electron-publisher-s3": "*",
+    "npm-run-all": "*",
+    "stylus": "*",
+    "wait-on": "*"
+  },
+  "scripts": {
+    "watch-css": "node scripts/sagiv watch",
+    "react-start": "react-scripts start",
+    "electron-start": "node src/electron-wait-react",
+    "start": "npm-run-all -p watch-css react-start",
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "build-css": "node scripts/sagiv build",
+    "build": "yarn build-css && react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "yarn run build && build",
+    "publish": "yarn run build && electron-builder --publish always",
+    "dist-all": "yarn run build && electron-builder --mac --win --linux",
+    "dist1": "electron-builder",
+    "_postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "publish": [
+      {
+        "provider": "s3",
+        "bucket": "stockstalk"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.finance"
+    },
+    "appId": "club.stockstalk.app",
+    "directories": {
+      "buildResources": "assets"
+    }
+  }
+}

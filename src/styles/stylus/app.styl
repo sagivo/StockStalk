@@ -1,0 +1,147 @@
+c0 = white
+c1 = #040d14
+c2 = #21ce99
+c3 = #a398aa
+
+html
+  color c1
+  font-size 14px
+  body
+    font-family Montserrat,sans-serif
+    input[type=submit],button
+      cursor pointer
+      background-color c2
+      border none
+    h1
+      margin-top 10px
+      font-size 18px
+      color c2
+
+.btn
+  border-radius 50px
+.btn-primary
+  background-color c2
+  border-color c2
+  &:hoverMainSettings
+    background-color c3
+    border-color c3
+
+#header
+  margin 10px
+  color c1
+  #logo
+    img
+      height 36px
+  #update-version
+    text-align center
+    padding 10px
+    a
+      color c2
+  li
+    margin-left 15px
+    display inline
+    font-weight bold
+  a
+    font-weight normal
+    color c1
+  #logo
+    font-size 26px
+    .summeryNum
+      cursor move
+      -webkit-user-select none
+      -webkit-app-region drag
+      color c1
+      // background-color black
+      margin-left 10px
+      padding 4px 10px
+      border-radius 20px
+  #today
+    color c1
+    font-size 12px
+    margin-left 55px
+    &.down
+      color red
+    span
+      margin-right 5px
+
+.up
+  color c2
+.down
+  color red
+.up,.down
+  img
+    width 12px
+    margin-bottom 5px
+
+#main-container
+  margin 0
+  padding 0
+  height 0
+
+#properties-table
+  margin 0
+  color c1
+  thead
+    color c1
+    font-weight bold
+    tr
+      th
+        background-color c0
+        position sticky
+        top 0
+        border-top none
+  tbody
+    tr
+      td
+        padding 10px
+        a
+          color c1
+
+#join-container
+  margin auto
+  text-align center
+  padding 10px
+  max-width 400px
+  #info
+    font-size 12px
+  #join
+    input
+      margin auto
+      font-size 16px
+      margin-top 10px
+      width 350px
+      border-radius 20px
+      padding 10px 20px
+    #login-error
+      color red
+      margin-top 10px
+  #switch
+    font-size 12px
+    margin-top 5px
+    // text-decoration: underline
+    // text-align right
+
+#summery
+  width 100%
+  text-align center
+  background-color c2
+  border 1px solid c2
+  color c0
+  .up,.down
+    color c0
+  padding 5px
+
+#settings
+  margin-top 10px
+  button
+    margin-right 10px
+  input[type=number]
+    width 50px
+  #setting-actions
+    margin-top 10px
+  div[disabled]
+    color gray
+  #version
+    margin-top 10px
+    font-size 10px
+    font-style italic
