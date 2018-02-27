@@ -25,3 +25,4 @@ dist
 *.lock
 
 img.png
+src/helpers/firebase.js
