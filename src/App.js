@@ -4,12 +4,13 @@ import Header from './Header';
 import Fetcher from './Fetcher';
 import Login from './Login';
 import Main from './Main';
+import Stock from './Stock';
 import Settings from './Settings';
 import RHLogin from './RHLogin';
 import './styles/app.css';
 
 @inject('store') @observer
-class App extends Component {
+export default class App extends Component {
   render() {
     const { page } = this.props.store.userStore;
 
@@ -20,10 +21,10 @@ class App extends Component {
         {page === 'RHLOGIN' && <RHLogin />}
         {(page === 'LOGIN' || page === 'REGISTER') && <Login />}
         {page === 'MAIN' && <Main />}
+        {page === 'STOCK' && <Stock />}
         {page === 'SETTINGS' && <Settings />}
       </div>
     );
   }
 }
 
-export default App;

@@ -13,6 +13,7 @@ export default class UserStore {
   @observable prevEquity;
   @observable stockAlerts = new Map();
   @observable appVersion;
+  @observable stock = {last: 234, symbol: "CBOE", name: "Cboe Global Markets, Inc. Common Stock", todayChange: 222.00, todayChangePercent: -0.49};
   @persist @observable notifyOnlyPositions = true;
   @persist @observable updateInterval = 5;
   @persist @observable token = null;
@@ -26,7 +27,7 @@ export default class UserStore {
   @observable positions = [];
   @observable watchlist = [];
   @observable routeParams = new Map();
-  @observable page = 'SETTINGS';
+  @observable page = 'STOCK';
 
   @action link = (page, routeParams = {}) => {
     this.page = page;
@@ -39,12 +40,13 @@ export default class UserStore {
 
   @action async setUser(user) {
     this.user = user;
+    return
     if (this.user) {
       if (this.token) this.link('MAIN');
       else this.link('RHLOGIN');
 
       const { uid, email } = user;
-      db.collection('users').doc(uid).set({ uid, email, appVersion: this.appVersion }, { merge: true })
+      db.collection('users').doc(uid).set({ uid, email, appVersion: this.appVersion || 'dev' }, { merge: true })
     }
     else {
       this.token = null;

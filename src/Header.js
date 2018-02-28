@@ -37,7 +37,7 @@ export default class Header extends Component {
         {this.props.store.userStore.newVersion && <div id="update-version"><a href="#a" onClick={this.updateVersion} className="summeryNum">UPDATE VERSION</a></div>}
         <span id="logo">
           <a href="#a" onClick={() => link('https://stockstalk.club?ref=app')}><img src={icon} alt="StockStalk"/></a>
-          {userStore.portfolio.equity && <CountUp
+          {userStore.user && userStore.portfolio.equity && <CountUp
             className="summeryNum"
             start={this.props.store.userStore.prevEquity}
             end={userStore.portfolio.equity}
