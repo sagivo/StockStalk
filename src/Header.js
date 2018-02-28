@@ -52,6 +52,7 @@ export default class Header extends Component {
         </span>
         <ul id="login-header" className="float-right">
           {userStore.user && userStore.token && <li>{(page === 'MAIN') ? 'Main' : <a href="#a" onClick={() => this.navigate('MAIN')}>Main</a>}</li>}
+          {userStore.user && userStore.token && <li>{(page === 'ORDERS') ? 'Orders' : <a href="#a" onClick={() => this.navigate('ORDERS')}>Orders</a>}</li>}
           {(userStore.user && !userStore.token) && <li>{(page === 'RHLOGIN') ? 'Login to Robinhood' : <a href="#a" onClick={() => this.navigate('RHLOGIN')}>Login to Robinhood</a>}</li>}
           {userStore.user && <li>{(page === 'SETTINGS') ? 'Settings' : <a href="#a" onClick={() => this.navigate('SETTINGS')}>Settings</a>}</li>}
         </ul>

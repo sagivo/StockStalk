@@ -5,6 +5,7 @@ import Fetcher from './Fetcher';
 import Login from './Login';
 import Main from './Main';
 import Stock from './Stock';
+import Orders from './Orders';
 import Settings from './Settings';
 import RHLogin from './RHLogin';
 import './styles/app.css';
@@ -22,6 +23,7 @@ export default class App extends Component {
         {(page === 'LOGIN' || page === 'REGISTER') && <Login />}
         {page === 'MAIN' && <Main />}
         {page === 'STOCK' && <Stock />}
+        {page === 'ORDERS' && <Orders />}
         {page === 'SETTINGS' && <Settings />}
       </div>
     );

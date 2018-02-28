@@ -27,7 +27,7 @@ export default class UserStore {
   @observable positions = [];
   @observable watchlist = [];
   @observable routeParams = new Map();
-  @observable page = 'STOCK';
+  @observable page = 'ORDERS';
 
   @action link = (page, routeParams = {}) => {
     this.page = page;

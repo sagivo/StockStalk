@@ -72,6 +72,10 @@ export default class Stock extends Component {
     return (
       <div id="stock">
         <h1>{stock.name}</h1>
+        <div id="last-price">
+          Last: {num(stock.last, { before: '$', noSymbol: true })}
+          <span className={stock.todayChangePercent >= 0 ? 'up' : 'down'}>({num(stock.todayChangePercent, {after: "%" })})</span>
+        </div>
         <div id="actions">
           <ul className="nav nav-tabs nav-justified">
             <li className="nav-item">
@@ -86,13 +90,10 @@ export default class Stock extends Component {
             <table>
               <tbody>
                 <tr>
-                  <td>Shares</td>
+                  <td>Shares {this.state.side === 'sell' ? `(${parseInt(stock.quantity)} max)` : ''}</td>
                   <td><input type="number" min="1" value={this.state.shares} onChange={this.setShares} /></td>
                 </tr>
-                {this.state.orderType === 'market' && <tr>
-                  <td>Market price</td>
-                  <td>{num(stock.last, { before: '$', noSymbol: true })}</td>
-                </tr>}
+               
                 {this.state.orderType.startsWith('stop') && <tr>
                   <td>Stop price</td>
                   <td><input type="number" min="0" value={this.state.stopPrice} onChange={this.setStopPrice} /></td>
@@ -101,7 +102,7 @@ export default class Stock extends Component {
                   <td>Limit price</td>
                   <td><input type="number" min="0" value={this.state.limitPrice} onChange={this.setLimitPrice} /></td>
                 </tr>}
-                <tr><td colSpan="2"><a href="#a" onClick={() => this.setState({ ...this.state, showAdvanced: !this.state.showAdvanced})}>{this.state.showAdvanced ? 'v' : '>' } Advanced</a></td></tr>
+                <tr><td colSpan="2"><a href="#a" onClick={() => this.setState({ ...this.state, showAdvanced: !this.state.showAdvanced})}>{this.state.showAdvanced ? '▾' : '›' } Advanced</a></td></tr>
 
                 {this.state.showAdvanced && <tr>
                   <td>Order type</td>

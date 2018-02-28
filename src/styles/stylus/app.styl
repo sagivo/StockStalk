@@ -148,9 +148,12 @@ html
 
 #stock
   text-align center
+  #last-price
+    span
+      margin-left 5px
   #actions
     margin 10px auto
-    width 350px
+    width 400px
   nav,.nav-tabs
     margin-top 10px
     a
@@ -161,20 +164,24 @@ html
     border 1px solid c2
     width 100%
     input
-      width 70px
+      width 80px
       padding 2px 5px
       text-align center
     tr
       td
         padding 10px
         &:nth-of-type(1)
-          width 50%
           text-align left
         &:nth-of-type(2)
-          width 50%
-          padding-left 20px
           text-align right
       a
         color c1
   button
     margin-top 10px
+
+#orders
+  button
+    border-radius 20px
+    background-color c2
+    color c0
+    padding 0 10px
