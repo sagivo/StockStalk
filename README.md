@@ -17,3 +17,20 @@ The code to compile the windows version is here in this repo. Official release i
 The code to compile the linux version is here in this repo. Official release is coming soon.
 
 ![Robinhood desktop](https://i.imgur.com/sF20GCi.png)
+
+## Stack
+
+Built on top of electron to support mac, windows and linux. The front is written using React frameworks. 
+
+## Install
+Make sure you have electron istalled first.  
+You will also need to provide credentials to a firebase account under `src/helpers/firebase.js`.  
+```
+yarn install
+yarn dev
+```
+To deploy simply call 
+```
+yarn publish
+```
+
