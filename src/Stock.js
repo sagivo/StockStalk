@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { num, link } from './helpers/general';
+import { num } from './helpers/general';
 import RH from './helpers/rh/index';
 
 @inject('store') @observer
@@ -72,7 +72,7 @@ export default class Stock extends Component {
       price: this.state.limitPrice,
     }
 
-    const res = await rh.Order.place(params);
+    await rh.Order.place(params);
     this.props.store.userStore.link('ORDERS')
   }
 
@@ -95,7 +95,7 @@ export default class Stock extends Component {
             <li className="nav-item">
               <a className={this.state.side === 'buy' ? 'nav-link active' : 'nav-link'} onClick={() => this.setState({...this.state, side: 'buy'})} href="#a">Buy</a>
             </li>
-            {parseInt(stock.quantity) > 0 && <li className="nav-item">
+            {parseInt(stock.quantity, 10) > 0 && <li className="nav-item">
               <a className={this.state.side === 'sell' ? 'nav-link active' : 'nav-link'} onClick={() => this.setState({...this.state, side: 'sell'})} href="#a">Sell</a>
             </li>}
 
@@ -104,7 +104,7 @@ export default class Stock extends Component {
             <table>
               <tbody>
                 <tr>
-                  <td>Shares {this.state.side === 'sell' ? `(${parseInt(stock.quantity)} max)` : ''}</td>
+                  <td>Shares {this.state.side === 'sell' ? `(${parseInt(stock.quantity, 10)} max)` : ''}</td>
                   <td><input type="number" min="1" value={this.state.shares} onChange={this.setShares} /></td>
                 </tr>
 

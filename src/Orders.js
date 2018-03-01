@@ -15,7 +15,7 @@ export default class Orders extends Component {
   }
 
   componentDidMount() {
-    this.getOrders()
+    setTimeout(this.getOrders, 500);
     this.setState({ ...this.state, interval: setInterval(this.getOrders, 5000)});
   }
 

@@ -24,7 +24,6 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     minWidth: 610,
     height: 413,
-    frame: false,
     nodeIntegration: false,
     contextIsolation: true,
     webPreferences: {
@@ -35,8 +34,16 @@ function createWindow () {
   // and load the index.html of the app.
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
 
-  mainWindow.on('closed', function () {
-    mainWindow = null
+  let forceQuite = false;
+
+  app.on('before-quit', () => forceQuite = true);
+
+  mainWindow.on('close', function (e) {
+      if (forceQuite) { mainWindow = null; }
+      else{
+        e.preventDefault();
+        mainWindow.hide();
+      }
   });
 
   // const positioner = new Positioner(mainWindow);
@@ -57,6 +64,9 @@ function createWindow () {
     }
     if (params.type === 'updateVersion') {
       autoUpdater.quitAndInstall();
+    }
+    if (params.type === 'quite') {
+      forceQuite = true;
     }
   });
 
