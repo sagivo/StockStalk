@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
-import { num, link } from './helpers/general';
+import { observer, inject } from 'mobx-react';
+import { num } from './helpers/general';
 
-@observer
+@inject('store') @observer
 export default class Watchilist extends Component {
+  constructor(props) {
+    super(props);
+
+    this.link = this.link.bind(this)
+  }
+
+  link(stock) {
+    this.props.store.userStore.stock = stock;
+    this.props.store.userStore.link('STOCK');
+  }
+
   render() {
     return (
       <table className="table" id="properties-table">
@@ -15,9 +26,9 @@ export default class Watchilist extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.data.map(d => (
+          {this.props.store.userStore.watchlist.map(d => (
             <tr key={d.symbol}>
-              <td><a href="#a" onClick={() => link(`https://finance.yahoo.com/quote/${d.symbol}`)}>{d.symbol}</a></td>
+              <td><a href="#a" onClick={() => this.link(d)}>{d.symbol}</a></td>
               <td>{num(d.last_trade_price, { before: '$', noSymbol: true })}</td>
               <td className={d.todayChangePercent >= 0 ? 'up' : 'down'}>{num(d.todayChangePercent, {after: "%" })}</td>
             </tr>

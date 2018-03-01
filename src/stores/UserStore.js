@@ -13,7 +13,7 @@ export default class UserStore {
   @observable prevEquity;
   @observable stockAlerts = new Map();
   @observable appVersion;
-  @observable stock = {last: 234, symbol: "CBOE", name: "Cboe Global Markets, Inc. Common Stock", todayChange: 222.00, todayChangePercent: -0.49};
+  @observable stock = {last: 234, symbol: "FB", name: "Facebook", todayChange: 222.00, todayChangePercent: -0.49};
   @persist @observable notifyOnlyPositions = true;
   @persist @observable updateInterval = 5;
   @persist @observable token = null;
@@ -27,7 +27,7 @@ export default class UserStore {
   @observable positions = [];
   @observable watchlist = [];
   @observable routeParams = new Map();
-  @observable page = 'ORDERS';
+  @observable page = 'LOGIN';
 
   @action link = (page, routeParams = {}) => {
     this.page = page;
@@ -40,7 +40,7 @@ export default class UserStore {
 
   @action async setUser(user) {
     this.user = user;
-    return
+    // return
     if (this.user) {
       if (this.token) this.link('MAIN');
       else this.link('RHLOGIN');

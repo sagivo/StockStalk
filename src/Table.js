@@ -14,6 +14,7 @@ export default class Table extends Component {
     this.props.store.userStore.stock = stock;
     this.props.store.userStore.link('STOCK');
   }
+
   render() {
     return (
       <table className="table table-hover" id="properties-table">
@@ -27,7 +28,7 @@ export default class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.data.map(d => (
+          {this.props.store.userStore.positions.map(d => (
             <tr key={d.symbol}>
               <td><a href="#a" onClick={() => this.link(d)}>{d.symbol}</a></td>
               <td>{num(d.last_trade_price, { before: '$', noSymbol: true })}</td>

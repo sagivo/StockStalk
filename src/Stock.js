@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { num, link } from './helpers/general';
+import RH from './helpers/rh/index';
 
 @inject('store') @observer
 export default class Stock extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { side: 'buy', orderType: 'market', shares: '', limitPrice: '', stopPrice: '', showAdvanced: false };
+    this.state = { side: 'buy', orderType: 'market', shares: '', limitPrice: '', stopPrice: '', showAdvanced: false, time: 'gfd' };
 
     this.setShares = this.setShares.bind(this);
     this.setLimitPrice = this.setLimitPrice.bind(this);
@@ -32,16 +33,28 @@ export default class Stock extends Component {
     this.setState({ ...this.state, orderType })
   }
 
-  placeOrder() {
-    let params = { side: this.state.side, quantity: this.state.shares }
+  async placeOrder() {
+    const rh = new RH();
+    const account = await rh.Account.url();
+    const { stock } = this.props.store.userStore;
+    let params = {
+      account,
+      symbol: stock.symbol,
+      instrument: stock.instrument,
+      side: this.state.side,
+      quantity: this.state.shares,
+      time_in_force: this.state.time,
+    }
 
     if (this.state.orderType === 'market') params = { ...params,
       type: 'market',
-      price: this.props.store.userStore.stock.last,
+      trigger: 'immediate',
+      price: stock.last,
     }
 
     if (this.state.orderType === 'limit') params = { ...params,
       type: 'limit',
+      trigger: 'immediate',
       price: this.state.limitPrice,
     }
 
@@ -49,7 +62,7 @@ export default class Stock extends Component {
       type: 'market',
       trigger: 'stop',
       stop_price: this.state.stopPrice,
-      price: this.props.store.userStore.stock.last,
+      price: stock.last,
     }
 
     if (this.state.orderType === 'stopLimit') params = { ...params,
@@ -59,7 +72,8 @@ export default class Stock extends Component {
       price: this.state.limitPrice,
     }
 
-    console.log(params);
+    const res = await rh.Order.place(params);
+    this.props.store.userStore.link('ORDERS')
   }
 
   render() {
@@ -81,9 +95,9 @@ export default class Stock extends Component {
             <li className="nav-item">
               <a className={this.state.side === 'buy' ? 'nav-link active' : 'nav-link'} onClick={() => this.setState({...this.state, side: 'buy'})} href="#a">Buy</a>
             </li>
-            <li className="nav-item">
+            {parseInt(stock.quantity) > 0 && <li className="nav-item">
               <a className={this.state.side === 'sell' ? 'nav-link active' : 'nav-link'} onClick={() => this.setState({...this.state, side: 'sell'})} href="#a">Sell</a>
-            </li>
+            </li>}
 
           </ul>
           <div id="options">
@@ -93,7 +107,7 @@ export default class Stock extends Component {
                   <td>Shares {this.state.side === 'sell' ? `(${parseInt(stock.quantity)} max)` : ''}</td>
                   <td><input type="number" min="1" value={this.state.shares} onChange={this.setShares} /></td>
                 </tr>
-               
+
                 {this.state.orderType.startsWith('stop') && <tr>
                   <td>Stop price</td>
                   <td><input type="number" min="0" value={this.state.stopPrice} onChange={this.setStopPrice} /></td>
@@ -118,9 +132,9 @@ export default class Stock extends Component {
                 {this.state.showAdvanced && <tr>
                   <td>Good for</td>
                   <td>
-                    <select className="custom-select">
-                      <option value="1">Today</option>
-                      <option value="2">Never Expires</option>
+                    <select className="custom-select" value={this.state.time} onChange={e => this.setState({ ...this.state, time: e.target.value })}>
+                      <option value="gfd">Today</option>
+                      <option value="gtc">Never Expires</option>
                     </select>
                   </td>
                 </tr>}

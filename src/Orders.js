@@ -15,15 +15,19 @@ export default class Orders extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.getOrders(), 500)
-    // this.getOrders()
+    this.getOrders()
+    this.setState({ ...this.state, interval: setInterval(this.getOrders, 5000)});
   }
 
   async cancel(id) {
     const rh = new RH();
     const order = new rh.Order();
     await order.cancel(id);
-    setTimeout(() => this.getOrders(), 1000)
+    setTimeout(() => this.getOrders(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.interval);
   }
 
   async getOrders() {
@@ -31,7 +35,6 @@ export default class Orders extends Component {
     const order = new rh.Order();
     const Instrument = rh.Instrument;
     const res = await order.recent
-    console.log(res);
 
     const calls = res.results.map(d => async () => {
       const instrumentId = d.instrument.split('/').slice(-2)[0];
@@ -66,12 +69,12 @@ export default class Orders extends Component {
               <tr key={d.id}>
                 <td>{d.side}</td>
                 <td>{d.symbol}</td>
-                <td>{d.type}</td>
+                <td>{d.trigger === 'stop' ? 'stop' : d.type}</td>
                 <td>{num(d.quantity, { before: '$', noSymbol: true })}</td>
-                <td>{num(d.price || d.average_price, { before: '$', noSymbol: true })}</td>
+                <td>{num(d.average_price || d.price, { before: '$', noSymbol: true })}</td>
                 <td>{d.fees}</td>
-                {d.state !== 'queued' && <td>{d.state}</td>}
-                {d.state === 'queued' && <td><button onClick={() => this.cancel(d.id)}>cancel</button></td>}
+                {!(d.state === 'queued' || d.state === 'confirmed') && <td>{d.state}</td>}
+                {(d.state === 'queued' || d.state === 'confirmed') && <td><button onClick={() => this.cancel(d.id)}>cancel</button></td>}
               </tr>
             ))}
           </tbody>
