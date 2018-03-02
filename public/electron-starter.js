@@ -50,9 +50,7 @@ function createWindow () {
   const tray = new Tray(path.join(__dirname, './img-starter.png'));
   const windowPosition = (process.platform === 'win32') ? 'trayBottomCenter' : 'trayCenter';
   tray.on('click', (_, bounds) => {
-    if (mainWindow.isVisible()) return mainWindow.hide();
-
-    // positioner.move('trayCenter', bounds)
+    // if (mainWindow.isVisible()) return mainWindow.hide();
     mainWindow.show()
   })
   const trayImagePath = app.getPath('userData') + '/tray.png';
@@ -63,6 +61,7 @@ function createWindow () {
       } catch(err) {console.error(err);}
     }
     if (params.type === 'updateVersion') {
+      forceQuite = true;
       autoUpdater.quitAndInstall();
     }
     if (params.type === 'quite') {
@@ -74,6 +73,7 @@ function createWindow () {
   Menu.setApplicationMenu(menu);
 
   // updater
+  autoUpdater.checkForUpdates();
   setInterval(() => autoUpdater.checkForUpdates(), 1 * 60 * 60 * 1000); //check each hour
 
   // move to location
