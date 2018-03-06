@@ -9,8 +9,6 @@ export default class Settings extends Component {
   constructor(props) {
     super(props);
 
-    this.props.store.userStore.appVersion = electron.remote.app.getVersion();
-
     this.logout = this.logout.bind(this);
     this.updateInterval = this.updateInterval.bind(this);
     this.updateMinNotificationChangePercent = this.updateMinNotificationChangePercent.bind(this);

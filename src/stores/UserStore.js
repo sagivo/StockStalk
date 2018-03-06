@@ -3,6 +3,7 @@ import { persist } from 'mobx-persist';
 import RH from '../helpers/rh/index';
 import { auth, db } from '../helpers/firebase';
 let cachedPositions = {};
+const electron = window.require('electron');
 
 export default class UserStore {
   constructor() {
@@ -46,6 +47,7 @@ export default class UserStore {
       else this.link('RHLOGIN');
 
       const { uid, email } = user;
+      this.appVersion = electron.remote.app.getVersion();
       db.collection('users').doc(uid).set({ uid, email, appVersion: this.appVersion || 'dev' }, { merge: true })
     }
     else {

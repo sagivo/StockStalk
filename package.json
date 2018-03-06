@@ -1,6 +1,6 @@
 {
   "name": "StockStalk",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "FOO BAR",
   "private": true,
   "description": "Your stocks on your desktop",
@@ -11,7 +11,6 @@
   "dependencies": {
     "electron-context-menu": "*",
     "electron-is-dev": "*",
-    "electron-positioner": "*",
     "electron-updater": "^2.20.1",
     "jimp": "oliver-moran/jimp",
     "mobx": "*",
@@ -52,9 +51,9 @@
     "electron": "electron .",
     "pack": "electron-builder --dir",
     "dist": "yarn run build && build",
-    "publish": "yarn run build && electron-builder --publish always",
-    "dist-all": "yarn run build && electron-builder --mac --win --linux",
-    "dist1": "electron-builder",
+    "dist-win": "yarn run build && build --win",
+    "dist-all": "yarn run build && electron-builder --mac --win",
+    "publish": "yarn run build && electron-builder --mac --win --publish always",
     "_postinstall": "electron-builder install-app-deps"
   },
   "build": {

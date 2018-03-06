@@ -3,7 +3,6 @@ const { app, BrowserWindow, Tray, ipcMain, Menu, MenuItem, shell } = require('el
 const { autoUpdater } = require("electron-updater");
 const path = require('path');
 const url = require('url');
-// const Positioner = require('electron-positioner');
 const isDev = require('electron-is-dev');
 
 // add menu for inspection
@@ -39,18 +38,19 @@ function createWindow () {
   app.on('before-quit', () => forceQuite = true);
 
   mainWindow.on('close', function (e) {
-      if (forceQuite) { mainWindow = null; }
-      else{
+      if (forceQuite) {
+        mainWindow = null;
+        return;
+      }
+
+      if (mainWindow) {
         e.preventDefault();
         mainWindow.hide();
       }
   });
 
-  // const positioner = new Positioner(mainWindow);
   const tray = new Tray(path.join(__dirname, './img-starter.png'));
-  const windowPosition = (process.platform === 'win32') ? 'trayBottomCenter' : 'trayCenter';
   tray.on('click', (_, bounds) => {
-    // if (mainWindow.isVisible()) return mainWindow.hide();
     mainWindow.show()
   })
   const trayImagePath = app.getPath('userData') + '/tray.png';
@@ -73,22 +73,22 @@ function createWindow () {
   Menu.setApplicationMenu(menu);
 
   // updater
-  autoUpdater.checkForUpdates();
-  setInterval(() => autoUpdater.checkForUpdates(), 1 * 60 * 60 * 1000); //check each hour
-
-  // move to location
-  // positioner.move('trayRight', tray.getBounds())
+  if (!isDev) {
+    autoUpdater.checkForUpdates();
+    setInterval(() => autoUpdater.checkForUpdates(), 1 * 60 * 60 * 1000); //check each hour
+  }
 
   //dev tools
   if (isDev) mainWindow.webContents.openDevTools()
-  else app.dock.hide()
+  else if (app.dock && app.dock.hide) app.dock.hide()
 }
 
 // single instance
 const shouldQuit = app.makeSingleInstance((commandLine, workingDirectory) => {
-  if (myWindow) {
-    if (myWindow.isMinimized()) myWindow.restore();
-    myWindow.focus();
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.show();
+    mainWindow.focus();
   }
 });
 
@@ -131,7 +131,6 @@ const template = [
   label: 'View',
   submenu: [
     {role: 'reload'},
-    {role: 'forcereload'},
     // {role: 'toggledevtools'},
     {type: 'separator'},
     {role: 'resetzoom'},
@@ -153,7 +152,7 @@ const template = [
   submenu: [
     {
       label: 'Learn More',
-      click () { require('electron').shell.openExternal('https://electronjs.org') }
+      click () { require('electron').shell.openExternal('https://stockstalk.club?source=app') }
     }
   ]
 }
