@@ -10,6 +10,7 @@ export default class Popular extends Component {
     this.state = { stocks: [] };
 
     this.loadData = this.loadData.bind(this);
+    this.link = this.link.bind(this);
 
     this.loadData();
   }
@@ -21,6 +22,10 @@ export default class Popular extends Component {
     this.setState({ ...this.state, stocks });
   }
 
+  link(stock) {
+    this.props.store.userStore.selectedStock = stock.symbol;
+    this.props.store.userStore.link('STOCK');
+  }
 
   render() {
     const { stocks } = this.state;
@@ -38,7 +43,7 @@ export default class Popular extends Component {
             {stocks.map(d => (
               <tr key={d.index}>
                 <td>{d.index + 1}</td>
-                <td>{d.symbol}</td>
+                <td><a href="#a" onClick={() => this.link(d)}>{d.symbol}</a></td>
                 <td>{d.name}</td>
               </tr>
             ))}

@@ -5,7 +5,7 @@
   "private": true,
   "description": "Your stocks on your desktop",
   "license": "MIT",
-  "main": "build/electron-starter.js",
+  "main": "public/electron-starter.js",
   "repository": "github:sagivo/StockStalk",
   "homepage": "./",
   "dependencies": {

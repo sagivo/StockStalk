@@ -36,7 +36,8 @@ export default class Stock extends Component {
   async placeOrder() {
     const rh = new RH();
     const account = await rh.Account.url();
-    const { stock } = this.props.store.userStore;
+    const stock = this.props.store.userStore.stocks.get(this.props.store.userStore.selectedStock);
+
     let params = {
       account,
       symbol: stock.symbol,
@@ -81,7 +82,9 @@ export default class Stock extends Component {
   }
 
   render() {
-    const { stock, portfolio } = this.props.store.userStore;
+    const { portfolio, selectedStock } = this.props.store.userStore;
+    const stock = this.props.store.userStore.stocks.get(selectedStock);
+
     let total;
     if (this.state.orderType === 'market') total = stock.last * this.state.shares;
     if (this.state.orderType === 'limit' || this.state.orderType === 'stopLimit') total = this.state.limitPrice * this.state.shares;
@@ -150,7 +153,7 @@ export default class Stock extends Component {
               </tbody>
             </table>
             <div id="action-error">{this.state.error}</div>
-            <button className="btn btn-primary btn-lg" onClick={this.placeOrder}>{this.state.side === "buy" ? 'BUY' : 'SELL'} {this.props.store.userStore.stock.symbol}</button>
+            <button className="btn btn-primary btn-lg" onClick={this.placeOrder}>{this.state.side === "buy" ? 'BUY' : 'SELL'} {stock.symbol}</button>
           </div>
         </div>
       </div>

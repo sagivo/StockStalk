@@ -11,7 +11,7 @@ export default class Table extends Component {
   }
 
   link(stock) {
-    this.props.store.userStore.stock = stock;
+    this.props.store.userStore.selectedStock = stock.symbol;
     this.props.store.userStore.link('STOCK');
   }
 

@@ -13,8 +13,9 @@ export default class UserStore {
   @observable user;
   @observable prevEquity;
   @observable stockAlerts = new Map();
+  @observable stocks = new Map();
   @observable appVersion;
-  @observable stock = {last: 234, symbol: "FB", name: "Facebook", todayChange: 222.00, todayChangePercent: -0.49};
+  @observable selectedStock;
   @persist @observable notifyOnlyPositions = true;
   @persist @observable updateInterval = 5;
   @persist @observable token = null;
@@ -109,10 +110,10 @@ export default class UserStore {
     const stock = new rh.Stock(symbols);
     const quotes = (await stock.quote).results.filter(a => a);
 
-    this.positions = quotes.filter(d => cachedPositions[d.symbol].quantity > 0).map(quote => {
+    this.positions = quotes.filter(d => cachedPositions[d.symbol].quantity > 0).map((quote, i) => {
       const price = parseFloat(quote.last_trade_price).toFixed(2); //last_extended_hours_trade_price
       const quantity = cachedPositions[quote.symbol].quantity;
-      return {
+      const stock = {
         ...cachedPositions[quote.symbol],
         ...quote,
         equity: price * quantity,
@@ -122,10 +123,15 @@ export default class UserStore {
         todayChangePercent: ((price - quote.previous_close)/quote.previous_close * 100).toFixed(2),
         totalChange: ((price - cachedPositions[quote.symbol].average_buy_price) * quantity).toFixed(2),
         totalChangePercent: ((price - cachedPositions[quote.symbol].average_buy_price)/cachedPositions[quote.symbol].average_buy_price * 100).toFixed(2),
+        i,
       }
-    });
 
-    this.watchlist = quotes.filter(d => !cachedPositions[d.symbol] || parseFloat(cachedPositions[d.symbol].quantity) === 0).map(quote => {
+      this.stocks.set(quote.symbol, stock);
+
+      return stock;
+    }).sort((a, b) => a.i - b.i);
+
+    this.watchlist = quotes.filter(d => !cachedPositions[d.symbol] || parseFloat(cachedPositions[d.symbol].quantity) === 0).map((quote, i) => {
       const price = parseFloat(quote.last_trade_price).toFixed(2); //last_extended_hours_trade_price
       return {
         ...cachedPositions[quote.symbol],
@@ -133,7 +139,8 @@ export default class UserStore {
         last: price,
         close: quote.previous_close,
         todayChangePercent: ((price - quote.previous_close)/quote.previous_close * 100).toFixed(2),
+        i,
       }
-    });
+    }).sort((a, b) => a.i - b.i);
   }
 }
