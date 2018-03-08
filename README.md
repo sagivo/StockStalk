@@ -2,18 +2,12 @@
 
 Free and open source Robinhood desktop version.  
 Built on top of Electron and React, allows you to build a version for Mac, Windows and Linux.  
+[Join our Slack channel](https://join.slack.com/t/stockstalkapp/shared_invite/enQtMzI1NzcwNDA0MTkyLWI1MGZmMDI3Yjk5YzRhZDQ5NDM1ZjVmNmUyOTQxMDFkMGE1MGQ1ZjE4MWY5YWNjMDFhZjllNzM1NjdlYWQwYmE)
 
+# Downloads
 
-# Robinhood for Mac
-
-At the moment we compiled a Mac version you can download it from the [StockStalk website](https://stockstalk.club).
-
-# Robinhood for Windows
-
-The code to compile the windows version is here in this repo. Official release is coming soon.
-
-# Robinhood for Linux
-
+[Download Robinhood for Mac](https://stockstalk.club/robinhood-mac).  
+[Download Robinhood for Windows](https://www.stockstalk.club/robinhood-windows).  
 The code to compile the linux version is here in this repo. Official release is coming soon.
 
 ![Robinhood desktop](https://i.imgur.com/sF20GCi.png)
@@ -33,4 +27,11 @@ To deploy simply call
 ```
 yarn publish
 ```
+
+
+## Donate
+The best donation is by submiting a PR and improving the code.  
+Alternatively, you can just [buy be a coffee](https://www.buymeacoffee.com/sagivo)
+
+
 
