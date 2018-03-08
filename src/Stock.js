@@ -8,7 +8,7 @@ export default class Stock extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { side: 'buy', orderType: 'market', shares: '', limitPrice: '', stopPrice: '', showAdvanced: false, time: 'gfd' };
+    this.state = { side: 'buy', orderType: 'market', shares: '', limitPrice: '', stopPrice: '', showAdvanced: false, time: 'gfd', error: null };
 
     this.setShares = this.setShares.bind(this);
     this.setLimitPrice = this.setLimitPrice.bind(this);
@@ -72,12 +72,16 @@ export default class Stock extends Component {
       price: this.state.limitPrice,
     }
 
-    await rh.Order.place(params);
-    this.props.store.userStore.link('ORDERS')
+    try {
+      await rh.Order.place(params);
+      this.props.store.userStore.link('ORDERS')
+    } catch (err) {
+      this.setState({ ...this.state, error: err.error.detail })
+    }
   }
 
   render() {
-    const { stock } = this.props.store.userStore;
+    const { stock, portfolio } = this.props.store.userStore;
     let total;
     if (this.state.orderType === 'market') total = stock.last * this.state.shares;
     if (this.state.orderType === 'limit' || this.state.orderType === 'stopLimit') total = this.state.limitPrice * this.state.shares;
@@ -87,8 +91,9 @@ export default class Stock extends Component {
       <div id="stock">
         <h1>{stock.name}</h1>
         <div id="last-price">
-          Last: {num(stock.last, { before: '$', noSymbol: true })}
+          <span>Last: {num(stock.last, { before: '$', noSymbol: true })}</span>
           <span className={stock.todayChangePercent >= 0 ? 'up' : 'down'}>({num(stock.todayChangePercent, {after: "%" })})</span>
+          <span>Available: {num(portfolio.buyingPower, { before: '$', noSymbol: true })}</span>
         </div>
         <div id="actions">
           <ul className="nav nav-tabs nav-justified">
@@ -144,6 +149,7 @@ export default class Stock extends Component {
                 </tr>
               </tbody>
             </table>
+            <div id="action-error">{this.state.error}</div>
             <button className="btn btn-primary btn-lg" onClick={this.placeOrder}>{this.state.side === "buy" ? 'BUY' : 'SELL'} {this.props.store.userStore.stock.symbol}</button>
           </div>
         </div>

@@ -41,14 +41,13 @@ export default class UserStore {
 
   @action async setUser(user) {
     this.user = user;
-    // return
     if (this.user) {
       if (this.token) this.link('MAIN');
       else this.link('RHLOGIN');
 
       const { uid, email } = user;
-      this.appVersion = electron.remote.app.getVersion();
-      db.collection('users').doc(uid).set({ uid, email, appVersion: this.appVersion || 'dev' }, { merge: true })
+      this.appVersion = electron.remote.app.getVersion() || 'dev';
+      db.collection('users').doc(uid).set({ uid, email, appVersion: this.appVersion || 'dev', os: window.process.platform }, { merge: true })
     }
     else {
       this.token = null;
@@ -102,7 +101,7 @@ export default class UserStore {
     const portfolio = await account.defaultPortfolio();
     portfolio.todayChange = (portfolio.equity - portfolio.equity_previous_close).toFixed(2);
     portfolio.todayChangePercent =  ((portfolio.equity - portfolio.equity_previous_close)/portfolio.equity_previous_close * 100).toFixed(2);
-    // portfolio.equity = Math.floor(Math.random() * 45500) + 1;
+    portfolio.buyingPower = parseFloat(portfolio.equity) - parseFloat(portfolio.market_value);
     this.portfolio = portfolio;
 
     const symbols = Object.keys(cachedPositions).slice(0, 1630).join(',');

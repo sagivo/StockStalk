@@ -209,9 +209,20 @@ html body h1 {
 #stock button {
   margin-top: 10px;
 }
+#stock #action-error {
+  color: #f00;
+}
 #orders button {
   border-radius: 20px;
   background-color: #21ce99;
   color: #fff;
   padding: 0 10px;
 }
+#share {
+  text-align: center;
+  margin: 20px;
+}
+#share div {
+  margin-top: 10px;
+}
+/*# sourceMappingURL=app.css.map */

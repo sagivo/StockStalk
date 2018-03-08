@@ -1,10 +1,25 @@
 import Request from './Request';
 import Order from './Order';
 import Account from './Account';
+import Instrument from './Instrument';
 
 export default class Stock {
   static get span() {
     return { day: 'day', month: 'month', year: 'year', fiveYears: '5years' };
+  }
+
+  static async popular() {
+    const res = await Request.get('midlands/tags/tag/100-most-popular');
+    const calls = res.instruments.map((i, index) => async () => {
+        const instrument = await Instrument.valueById(i.split('/').slice(-2)[0]);
+        return {
+          symbol: instrument.symbol,
+          name: instrument.name,
+          index,
+        }
+      }
+    );
+    return (await Promise.all(calls.map(c => c()))).sort((a, b) => a.index - b.index)
   }
 
   constructor(symbols) {

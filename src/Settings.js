@@ -76,11 +76,6 @@ export default class Settings extends Component {
         <div>
           Update stocks every <input type="number" value={updateInterval} min="1" onChange={this.updateInterval} /> seconds.
         </div>
-        <div className="form-check form-check-inline" disabled>
-          <label className="form-check-label">
-            <input className="form-check-input" type="checkbox" disabled/> Allow buy & sell (coming soon)
-          </label>
-        </div>
         <div id="setting-actions">
           <button onClick={() => link('https://stockstalk.club?ref=app')} className="btn btn-primary">Homepage</button> 
           <button onClick={this.logout} className="btn btn-danger">Logout</button>

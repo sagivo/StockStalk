@@ -222,8 +222,9 @@ autoUpdater.on('update-downloaded', (ev, info) => {
 });
 
 autoUpdater.on('update-downloaded', (ev, info) => {
-  // autoUpdater.quitAndInstall();
-  mainWindow.webContents.send('newVersion');
+  forceQuite = true;
+  autoUpdater.quitAndInstall();
+  // mainWindow.webContents.send('newVersion');
 })
 
 function sendStatusToWindow(text) {
