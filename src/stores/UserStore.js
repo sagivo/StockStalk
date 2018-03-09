@@ -133,7 +133,7 @@ export default class UserStore {
 
     this.watchlist = quotes.filter(d => !cachedPositions[d.symbol] || parseFloat(cachedPositions[d.symbol].quantity) === 0).map((quote, i) => {
       const price = parseFloat(quote.last_trade_price).toFixed(2); //last_extended_hours_trade_price
-      return {
+      const stock = {
         ...cachedPositions[quote.symbol],
         ...quote,
         last: price,
@@ -141,6 +141,9 @@ export default class UserStore {
         todayChangePercent: ((price - quote.previous_close)/quote.previous_close * 100).toFixed(2),
         i,
       }
+      this.stocks.set(quote.symbol, stock);
+
+      return stock;
     }).sort((a, b) => a.i - b.i);
   }
 }
