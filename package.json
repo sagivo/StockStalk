@@ -54,7 +54,7 @@
     "dist-win": "yarn run build && build --win",
     "dist-linux": "yarn run build && build --linux",
     "dist-all": "yarn run build && electron-builder --mac --win --linux",
-    "publish": "yarn run build && electron-builder --mac --win --publish always",
+    "publish": "yarn run build && electron-builder --mac --win --linux --publish always",
     "_postinstall": "electron-builder install-app-deps"
   },
   "build": {
