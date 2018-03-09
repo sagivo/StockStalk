@@ -38,15 +38,16 @@ function createWindow () {
   app.on('before-quit', () => forceQuite = true);
 
   mainWindow.on('close', function (e) {
-      if (forceQuite) {
-        mainWindow = null;
-        return;
-      }
-
-      if (mainWindow) {
-        e.preventDefault();
-        mainWindow.hide();
-      }
+    console.log('close it', forceQuite);
+    if (forceQuite) {
+      mainWindow = null;
+      return;
+    }
+    else if (mainWindow) {
+      console.log('should not be here');
+      e.preventDefault();
+      mainWindow.hide();
+    }
   });
 
   const tray = new Tray(path.join(__dirname, './img-starter.png'));
@@ -131,7 +132,7 @@ const template = [
   label: 'View',
   submenu: [
     {role: 'reload'},
-    // {role: 'toggledevtools'},
+    {role: 'toggledevtools'},
     {type: 'separator'},
     {role: 'resetzoom'},
     {role: 'zoomin'},
@@ -217,14 +218,12 @@ autoUpdater.on('error', (ev, err) => {
 autoUpdater.on('download-progress', (ev, progressObj) => {
   sendStatusToWindow('Download progress...');
 })
-autoUpdater.on('update-downloaded', (ev, info) => {
-  sendStatusToWindow('Update downloaded; will install in 5 seconds');
-});
 
 autoUpdater.on('update-downloaded', (ev, info) => {
+  sendStatusToWindow('Update downloaded; will install now');
   forceQuite = true;
-  autoUpdater.quitAndInstall();
-  // mainWindow.webContents.send('newVersion');
+  mainWindow.webContents.send('newVersion');
+  // autoUpdater.quitAndInstall();
 })
 
 function sendStatusToWindow(text) {
