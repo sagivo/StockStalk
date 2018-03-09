@@ -5,7 +5,7 @@
   "private": true,
   "description": "Your stocks on your desktop",
   "license": "MIT",
-  "main": "build/electron-starter.js",
+  "main": "public/electron-starter.js",
   "repository": "github:sagivo/StockStalk",
   "homepage": "./",
   "dependencies": {
@@ -52,7 +52,8 @@
     "pack": "electron-builder --dir",
     "dist": "yarn run build && build",
     "dist-win": "yarn run build && build --win",
-    "dist-all": "yarn run build && electron-builder --mac --win",
+    "dist-linux": "yarn run build && build --linux",
+    "dist-all": "yarn run build && electron-builder --mac --win --linux",
     "publish": "yarn run build && electron-builder --mac --win --publish always",
     "_postinstall": "electron-builder install-app-deps"
   },
