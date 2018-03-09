@@ -39,12 +39,12 @@
     "wait-on": "*"
   },
   "scripts": {
-    "watch-css": "node scripts/sagiv watch",
+    "watch-css": "node scripts/cssBuild watch",
     "react-start": "react-scripts start",
     "electron-start": "node src/electron-wait-react",
     "start": "npm-run-all -p watch-css react-start",
     "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "build-css": "node scripts/sagiv build",
+    "build-css": "node scripts/cssBuild build",
     "build": "yarn build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
