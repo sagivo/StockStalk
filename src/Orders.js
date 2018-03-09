@@ -70,7 +70,7 @@ export default class Orders extends Component {
                 <td>{d.side}</td>
                 <td>{d.symbol}</td>
                 <td>{d.trigger === 'stop' ? 'stop' : d.type}</td>
-                <td>{num(d.quantity, { before: '$', noSymbol: true })}</td>
+                <td>{parseInt(d.quantity)}</td>
                 <td>{num(d.average_price || d.price, { before: '$', noSymbol: true })}</td>
                 <td>{d.fees}</td>
                 {!(d.state === 'queued' || d.state === 'confirmed') && <td>{d.state}</td>}
