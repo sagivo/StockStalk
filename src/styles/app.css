@@ -225,3 +225,16 @@ html body h1 {
 #share div {
   margin-top: 10px;
 }
+.highcharts-credits {
+  display: none;
+}
+.bold {
+  font-weight: bold;
+}
+#stock-chart {
+  height: 160px;
+}
+#stock-chart a {
+  color: #040d14;
+}
+/*# sourceMappingURL=app.css.map */

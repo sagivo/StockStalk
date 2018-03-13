@@ -1,20 +1,81 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { num } from './helpers/general';
+import { num, getTodaty } from './helpers/general';
 import RH from './helpers/rh/index';
+import Chart from './Chart';
 
 @inject('store') @observer
 export default class Stock extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { side: 'buy', orderType: 'market', shares: '', limitPrice: '', stopPrice: '', showAdvanced: false, time: 'gfd', error: null };
+    const stock = this.props.store.userStore.stocks.get(this.props.store.userStore.selectedStock);
+    this.state = { stock, side: 'buy', orderType: 'market', shares: '', limitPrice: '', stopPrice: '', showAdvanced: false, time: 'gfd', error: null, config: null, selectedTime: 'now' };
+    this.setChart('now');
 
     this.setShares = this.setShares.bind(this);
     this.setLimitPrice = this.setLimitPrice.bind(this);
     this.setOrderType = this.setOrderType.bind(this);
     this.setStopPrice = this.setStopPrice.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
+    this.setChart = this.setChart.bind(this);
+  }
+
+  async setChart(selectedTime) {
+    try {
+      const today = getTodaty();
+      const time = {
+        now: {name: 'TIME_SERIES_INTRADAY', row: 'Time Series (1min)', size: 'full', filter: k => k.startsWith(today) },
+        day: {name: 'TIME_SERIES_DAILY', row: 'Time Series (Daily)', size: 'compact', filter: () => true },
+        all: {name: 'TIME_SERIES_MONTHLY', row: 'Monthly Time Series', size: 'full', filter: () => true},
+      }[selectedTime];
+
+      const res = await fetch(`https://www.alphavantage.co/query?function=${time.name}&symbol=${this.state.stock.symbol}&interval=1min&outputsize=${time.size}&apikey=UY2TNX3E7L3LMD5K`);
+      const resJson = await res.json();
+      const data = Object.keys(resJson[time.row]).filter(time.filter).map(k => [new Date(k + ' EST').getTime(), parseFloat(resJson[time.row][k]['4. close'])]).reverse()
+      const config = {
+        time: {timezoneOffset: 0},
+        rangeSelector: {
+          enabled: false
+        },
+        xAxis: {
+          visible: false,
+        },
+        yAxis: {
+          visible: false,
+        },
+        legend: {enabled: false},
+        title: {text: null},
+        tooltip: {
+          headerFormat: null,
+          formatter: function() {
+              return  '<div class="point-data"><b>$' + this.point.y +'</b><br/>' + new Date(this.point.x).toLocaleString() + '</div>'
+          }
+        },
+        scrollbar: {
+          enabled: false
+        },
+        navigator: {
+          enabled: false
+        },
+        chart: {
+          height: '140',
+        },
+        series: [{
+          labels: { enabled: false },
+          data,
+          fillColor: {
+            linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+            stops: [
+              [0, '#21ce99'],
+              [1, 'white']
+            ]
+          },
+          color: '#21ce99',
+        }]
+      };
+      this.setState({ ...this.state, config, selectedTime });
+    } catch (err) { console.error(err); }
   }
 
   setShares(e) {
@@ -36,7 +97,7 @@ export default class Stock extends Component {
   async placeOrder() {
     const rh = new RH();
     const account = await rh.Account.url();
-    const stock = this.props.store.userStore.stocks.get(this.props.store.userStore.selectedStock);
+    const { stock } = this.state;
 
     let params = {
       account,
@@ -82,9 +143,8 @@ export default class Stock extends Component {
   }
 
   render() {
-    const { portfolio, selectedStock } = this.props.store.userStore;
-    const stock = this.props.store.userStore.stocks.get(selectedStock);
-
+    const { portfolio } = this.props.store.userStore;
+    const { stock, selectedTime } = this.state;
     let total;
     if (this.state.orderType === 'market') total = stock.last * this.state.shares;
     if (this.state.orderType === 'limit' || this.state.orderType === 'stopLimit') total = this.state.limitPrice * this.state.shares;
@@ -93,6 +153,10 @@ export default class Stock extends Component {
     return (
       <div id="stock">
         <h1>{stock.name}</h1>
+        {this.state.config && <div id="stock-chart">
+          <div><a href="#a" onClick={() => this.setChart('now')} className={selectedTime === 'now' ? 'bold' : ''}>today</a> | <a href="#a" onClick={() => this.setChart('day')} className={selectedTime === 'day' ? 'bold' : ''}>6 months</a> | <a href="#a" onClick={() => this.setChart('all')} className={selectedTime === 'all' ? 'bold' : ''}>all</a></div>
+          <Chart config={this.state.config} />
+        </div>}
         <div id="last-price">
           <span>Last: {num(stock.last, { before: '$', noSymbol: true })}</span>
           <span className={stock.todayChangePercent >= 0 ? 'up' : 'down'}>({num(stock.todayChangePercent, {after: "%" })})</span>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { num, link } from './helpers/general';
 import CountUp from 'react-countup';
-import icon from './images/icon.png'
+import icon from './images/icon.png';
 const { ipcRenderer } = window.require('electron');
 
 @inject('store') @observer
@@ -31,7 +31,6 @@ export default class Header extends Component {
   render() {
     const { userStore } = this.props.store;
     const { page } = userStore;
-
     return (
       <div id="header">
         {this.props.store.userStore.newVersion && <div id="update-version"><a href="#a" onClick={this.updateVersion} className="summeryNum">UPDATE VERSION</a></div>}
