@@ -43,7 +43,7 @@ export default class Popular extends Component {
             {stocks.map(d => (
               <tr key={d.index}>
                 <td>{d.index + 1}</td>
-                <td><a href="#a" onClick={() => this.link(d)}>{d.symbol}</a></td>
+                <td>{d.symbol}</td>
                 <td>{d.name}</td>
               </tr>
             ))}
