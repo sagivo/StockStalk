@@ -39,7 +39,11 @@ html body h1 {
   padding: 10px;
 }
 #header #update-version a {
-  color: #21ce99;
+  border-radius: 30px;
+  color: #fff;
+  padding: 5px 10px;
+  background-color: #f00;
+  font-weight: bold;
 }
 #header li {
   margin-left: 15px;
