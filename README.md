@@ -1,3 +1,4 @@
+![StockStalk](https://media.giphy.com/media/cRMNl8P3mt4OFL8Sxm/giphy.gif)
 # Robinhood on desktop
 
 Free and open source Robinhood desktop version.  
