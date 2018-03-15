@@ -27,6 +27,22 @@ export default class Stock {
     this.instruments = {};
   }
 
+  get todayQuotes() {
+    return Request.get(`quotes/historicals/${this.symbols}`, { interval: 'week', bounds: 'regular' } );
+  }
+
+  getQuotes(params) {
+    return Request.get(`quotes/historicals/${this.symbols}`, params);
+  }
+
+  get yearQuotes() {
+    return Request.get(`quotes/historicals/${this.symbols}`, { interval: 'day' } );
+  }
+
+  get weekQuotes() {
+    return Request.get(`quotes/historicals/${this.symbols}`, { interval: 'day' } );
+  }
+
   get quote() {
     return Request.get('quotes', { symbols: this.symbols } );
   }

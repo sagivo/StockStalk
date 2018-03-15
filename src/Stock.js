@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { num, getTodaty } from './helpers/general';
+import { num } from './helpers/general';
 import RH from './helpers/rh/index';
 import Chart from './Chart';
 
@@ -11,7 +11,7 @@ export default class Stock extends Component {
 
     const stock = this.props.store.userStore.stocks.get(this.props.store.userStore.selectedStock);
     this.state = { stock, side: 'buy', orderType: 'market', shares: '', limitPrice: '', stopPrice: '', showAdvanced: false, time: 'gfd', error: null, config: null, selectedTime: 'now' };
-    this.setChart('now');
+    this.setChart('day');
 
     this.setShares = this.setShares.bind(this);
     this.setLimitPrice = this.setLimitPrice.bind(this);
@@ -23,16 +23,18 @@ export default class Stock extends Component {
 
   async setChart(selectedTime) {
     try {
-      const today = getTodaty();
-      const time = {
-        now: {name: 'TIME_SERIES_INTRADAY', row: 'Time Series (1min)', size: 'full', filter: k => k.startsWith(today) },
-        day: {name: 'TIME_SERIES_DAILY', row: 'Time Series (Daily)', size: 'compact', filter: () => true },
-        all: {name: 'TIME_SERIES_MONTHLY', row: 'Monthly Time Series', size: 'full', filter: () => true},
-      }[selectedTime];
+      const rh = new RH();
+      let options;
+      switch (selectedTime) {
+        case 'day': options = { interval: '5minute', span: 'day' }; break;
+        case 'year': options = { interval: 'day', span: 'year' }; break;
+        case 'all': options = { interval: 'week', span: '5year' }; break;
+      }
+      const stock = new rh.Stock(this.state.stock.symbol);
 
-      const res = await fetch(`https://www.alphavantage.co/query?function=${time.name}&symbol=${this.state.stock.symbol}&interval=1min&outputsize=${time.size}&apikey=UY2TNX3E7L3LMD5K`);
-      const resJson = await res.json();
-      const data = Object.keys(resJson[time.row]).filter(time.filter).map(k => [new Date(k + ' EST').getTime(), parseFloat(resJson[time.row][k]['4. close'])]).reverse()
+      const res = await stock.getQuotes(options);
+      console.log(res);
+      const data = res.historicals.map(d => [new Date(d['begins_at']).getTime(), parseFloat(d['close_price'])]);
       const config = {
         time: {timezoneOffset: 0},
         rangeSelector: {
@@ -58,6 +60,7 @@ export default class Stock extends Component {
         navigator: {
           enabled: false
         },
+        plotOptions: { line: { marker: { enabled: false } } },
         chart: {
           height: '140',
         },
@@ -154,7 +157,7 @@ export default class Stock extends Component {
       <div id="stock">
         <h1>{stock.name}</h1>
         {this.state.config && <div id="stock-chart">
-          <div><a href="#a" onClick={() => this.setChart('now')} className={selectedTime === 'now' ? 'bold' : ''}>today</a> | <a href="#a" onClick={() => this.setChart('day')} className={selectedTime === 'day' ? 'bold' : ''}>6 months</a> | <a href="#a" onClick={() => this.setChart('all')} className={selectedTime === 'all' ? 'bold' : ''}>all</a></div>
+          <div><a href="#a" onClick={() => this.setChart('day')} className={selectedTime === 'day' ? 'bold' : ''}>today</a> | <a href="#a" onClick={() => this.setChart('year')} className={selectedTime === 'year' ? 'bold' : ''}>year</a> | <a href="#a" onClick={() => this.setChart('all')} className={selectedTime === 'all' ? 'bold' : ''}>5 years</a></div>
           <Chart config={this.state.config} />
         </div>}
         <div id="last-price">
