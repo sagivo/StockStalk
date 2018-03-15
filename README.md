@@ -1,5 +1,7 @@
 # Robinhood on desktop
 
+![StockStalk](https://media.giphy.com/media/cRMNl8P3mt4OFL8Sxm/giphy.gif)
+
 Free and open source Robinhood desktop version.  
 Built on top of Electron and React, allows you to build a version for Mac, Windows and Linux.  
 🤘[Join our Slack channel](https://join.slack.com/t/stockstalkapp/shared_invite/enQtMzI1NzcwNDA0MTkyLWI1MGZmMDI3Yjk5YzRhZDQ5NDM1ZjVmNmUyOTQxMDFkMGE1MGQ1ZjE4MWY5YWNjMDFhZjllNzM1NjdlYWQwYmE)🤘
