@@ -48,12 +48,18 @@ export default class UserStore {
 
       const { uid, email } = user;
       this.appVersion = electron.remote.app.getVersion() || 'dev';
-      db.collection('users').doc(uid).set({ uid, email, appVersion: this.appVersion || 'dev', os: window.process.platform }, { merge: true })
+      await db.collection('users').doc(uid).set({ uid, email, appVersion: this.appVersion || 'dev', os: window.process.platform }, { merge: true });
+      db.collection('users').doc(uid).onSnapshot(snapshot => this.user = snapshot.data());
     }
     else {
       this.token = null;
       this.link('REGISTER');
     }
+  }
+
+  @action signForRobo() {
+    const { uid } = this.user;
+    db.collection('users').doc(uid).update({ isSignForRobo: true });
   }
 
   @action async updatePositions() {

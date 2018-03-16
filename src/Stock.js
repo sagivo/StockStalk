@@ -29,6 +29,7 @@ export default class Stock extends Component {
         case 'day': options = { interval: '5minute', span: 'day' }; break;
         case 'year': options = { interval: 'day', span: 'year' }; break;
         case 'all': options = { interval: 'week', span: '5year' }; break;
+        default: break;
       }
       const stock = new rh.Stock(this.state.stock.symbol);
 

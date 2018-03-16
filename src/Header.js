@@ -56,6 +56,7 @@ export default class Header extends Component {
           {userStore.user && userStore.token && <li>{(page === 'SHARE') ? 'Share' : <a href="#a" onClick={() => this.navigate('SHARE')}>Share</a>}</li>}
           {(userStore.user && !userStore.token) && <li>{(page === 'RHLOGIN') ? 'Login to Robinhood' : <a href="#a" onClick={() => this.navigate('RHLOGIN')}>Login to Robinhood</a>}</li>}
           {userStore.user && <li>{(page === 'SETTINGS') ? 'Settings' : <a href="#a" onClick={() => this.navigate('SETTINGS')}>Settings</a>}</li>}
+          {userStore.user && userStore.token && <li>{(page === 'ROBO') ? <span role="img" aria-label="robot">🤖</span> : <a href="#a" onClick={() => this.navigate('ROBO')}><span role="img" aria-label="robot">🤖</span></a>}</li>}
         </ul>
         {userStore.portfolio.equity && <div id="today">
           <span className={userStore.portfolio.todayChange >= 0 ? 'up' : 'down'}>{num(userStore.portfolio.todayChange, {before: "$" })} ({num(userStore.portfolio.todayChangePercent, {after: "%" })})</span> 
