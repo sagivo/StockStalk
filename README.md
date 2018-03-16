@@ -19,7 +19,27 @@ The state is managed by mobX.
 
 ## Install
 - Make sure you have electron and react istalled first.  
-- You will also need to provide credentials to a firebase account under `src/helpers/firebase.js`.  
+- You will also need to create a firebase file account under `src/helpers/firebase.js` with this code (make sure to insert your credentials):  
+```js
+const firebase = window.firebase;
+const config = {
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: ""
+} 
+
+firebase.initializeApp(config);
+const db = firebase.firestore();
+const auth = firebase.auth();
+ 
+export { auth, db }
+
+```
+
+To start developing:  
 ```
 yarn install
 yarn dev
@@ -46,6 +66,3 @@ yarn publish
 ## Donate
 The best donation is by submiting a PR and improving the code.  
 Alternatively, you can just [buy me a coffee](https://www.buymeacoffee.com/sagivo)
-
-
-
