@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { num } from './helpers/general';
+import { num, link } from './helpers/general';
 import RH from './helpers/rh/index';
 import Chart from './Chart';
 
@@ -10,8 +10,9 @@ export default class Stock extends Component {
     super(props);
 
     const stock = this.props.store.userStore.stocks.get(this.props.store.userStore.selectedStock);
-    this.state = { stock, side: 'buy', orderType: 'market', shares: '', limitPrice: '', stopPrice: '', showAdvanced: false, time: 'gfd', error: null, config: null, selectedTime: 'now' };
+    this.state = { stock, side: 'buy', orderType: 'market', shares: '', limitPrice: '', stopPrice: '', showAdvanced: false, time: 'gfd', error: null, config: null, selectedTime: 'now', news: [] };
     this.setChart('day');
+    this.getNews();
 
     this.setShares = this.setShares.bind(this);
     this.setLimitPrice = this.setLimitPrice.bind(this);
@@ -19,6 +20,14 @@ export default class Stock extends Component {
     this.setStopPrice = this.setStopPrice.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.setChart = this.setChart.bind(this);
+  }
+
+  async getNews() {
+    const rh = new RH();
+    const stock = new rh.Stock(this.state.stock.symbol);
+    const res = await stock.news;
+    const news = res.results.map(n => ({ img: n.preview_image_url, time: n.published_at, source: n.source, summary: n.summary, title: n.title, url: n.url, uuid: n.uuid }))
+    this.setState({ ...this.state, news });
   }
 
   async setChart(selectedTime) {
@@ -34,7 +43,6 @@ export default class Stock extends Component {
       const stock = new rh.Stock(this.state.stock.symbol);
 
       const res = await stock.getQuotes(options);
-      console.log(res);
       const data = res.historicals.map(d => [new Date(d['begins_at']).getTime(), parseFloat(d['close_price'])]);
       const config = {
         time: {timezoneOffset: 0},
@@ -52,7 +60,7 @@ export default class Stock extends Component {
         tooltip: {
           headerFormat: null,
           formatter: function() {
-              return  '<div class="point-data"><b>$' + this.point.y +'</b><br/>' + new Date(this.point.x).toLocaleString() + '</div>'
+              return  '<div className="point-data"><b>$' + this.point.y +'</b><br/>' + new Date(this.point.x).toLocaleString() + '</div>'
           }
         },
         scrollbar: {
@@ -223,6 +231,19 @@ export default class Stock extends Component {
             <div id="action-error">{this.state.error}</div>
             <button className="btn btn-primary btn-lg" onClick={this.placeOrder}>{this.state.side === "buy" ? 'BUY' : 'SELL'} {stock.symbol}</button>
           </div>
+        </div>
+        <div id="stock-news" className="container">
+          {this.state.news.map(n => (
+            <div className="news-container" key={n.uuid}>
+              <div className="left-img"><img alt="" src={n.img} /></div>
+              <div className="stock-news-story">
+                <h5>{n.source} <span className="time">{new Date(n.time).toLocaleString()}</span></h5>
+                <h4><a href="#a" onClick={() => link(n.url)}>{n.title}</a></h4>
+                <div className="summary">{n.summary}</div>
+              </div>
+              <div className="clear"><hr/></div>
+            </div>
+          ))}
         </div>
       </div>
     );

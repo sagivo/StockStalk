@@ -27,6 +27,10 @@ export default class Stock {
     this.instruments = {};
   }
 
+  get news() {
+    return Request.get(`midlands/news/${this.symbols}`);
+  }
+
   get todayQuotes() {
     return Request.get(`quotes/historicals/${this.symbols}`, { interval: 'week', bounds: 'regular' } );
   }

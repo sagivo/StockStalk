@@ -23,7 +23,6 @@ export default class Main extends Component {
     const account = new rh.Account();
     const news = await account.news;
     if (news.results) {
-      console.log(news.results);
       this.setState({ ...this.state, allNews: news.results });
     }
   }

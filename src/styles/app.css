@@ -239,6 +239,44 @@ html body h1 {
 #stock #action-error {
   color: #f00;
 }
+#stock #stock-news {
+  margin-top: 40px;
+}
+#stock #stock-news .news-container .clear {
+  clear: both;
+  padding: 20px 0;
+}
+#stock #stock-news .news-container .left-img {
+  width: 20%;
+  float: left;
+}
+#stock #stock-news .news-container .left-img img {
+  width: 100%;
+}
+#stock #stock-news .news-container .stock-news-story {
+  float: right;
+  width: 80%;
+  padding-left: 20px;
+  text-align: left;
+}
+#stock #stock-news .news-container .stock-news-story h5 {
+  font-size: 12px;
+  margin: 0;
+}
+#stock #stock-news .news-container .stock-news-story h5 .time {
+  color: #040d14;
+}
+#stock #stock-news .news-container .stock-news-story h4 {
+  font-size: 14px;
+  margin: 0;
+}
+#stock #stock-news .news-container .stock-news-story h4 a {
+  color: #21ce99;
+}
+#stock #stock-news .news-container .stock-news-story .summary {
+  color: #040d14;
+  font-size: 12px;
+}
 #orders button {
   border-radius: 20px;
   background-color: #21ce99;
