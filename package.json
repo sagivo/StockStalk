@@ -1,6 +1,6 @@
 {
   "name": "StockStalk",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "author": "FOO BAR",
   "private": true,
   "description": "Your stocks on your desktop",
@@ -35,6 +35,7 @@
     "electron": "*",
     "electron-builder": "*",
     "electron-publisher-s3": "*",
+    "firebase-admin": "*",
     "npm-run-all": "*",
     "stylus": "*",
     "wait-on": "*"

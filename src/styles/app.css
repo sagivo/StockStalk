@@ -98,14 +98,15 @@ html body h1 {
   background-color: #21ce99;
   color: #fff;
 }
+#main-container #news h4 {
+  padding: 0;
+  margin: 0;
+}
 #main-container #news #news-text {
-  margin: 0 20px;
+  background-color: #21ce99;
 }
 #main-container #news a {
   color: #fff;
-}
-#main-container #news .link {
-  position: relative;
 }
 #main-container #news #prevNews {
   float: left;
@@ -242,38 +243,37 @@ html body h1 {
 #stock #stock-news {
   margin-top: 40px;
 }
-#stock #stock-news .news-container .clear {
-  clear: both;
+#stock #stock-news .news-container {
   padding: 20px 0;
 }
-#stock #stock-news .news-container .left-img {
+#stock #stock-news .left-img {
   width: 20%;
   float: left;
 }
-#stock #stock-news .news-container .left-img img {
+#stock #stock-news .left-img img {
   width: 100%;
 }
-#stock #stock-news .news-container .stock-news-story {
+#stock #stock-news .stock-news-story {
   float: right;
   width: 80%;
   padding-left: 20px;
   text-align: left;
 }
-#stock #stock-news .news-container .stock-news-story h5 {
+#stock #stock-news .stock-news-story h5 {
   font-size: 12px;
   margin: 0;
 }
-#stock #stock-news .news-container .stock-news-story h5 .time {
+#stock #stock-news .stock-news-story h5 .time {
   color: #040d14;
 }
-#stock #stock-news .news-container .stock-news-story h4 {
+#stock #stock-news .stock-news-story h4 {
   font-size: 14px;
   margin: 0;
 }
-#stock #stock-news .news-container .stock-news-story h4 a {
+#stock #stock-news .stock-news-story h4 a {
   color: #21ce99;
 }
-#stock #stock-news .news-container .stock-news-story .summary {
+#stock #stock-news .stock-news-story .summary {
   color: #040d14;
   font-size: 12px;
 }
@@ -311,5 +311,8 @@ html body h1 {
 #robo #onlist {
   font-size: 22px;
   color: #21ce99;
+}
+.clear {
+  clear: both;
 }
 /*# sourceMappingURL=app.css.map */

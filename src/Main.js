@@ -37,8 +37,10 @@ export default class Main extends Component {
       <div id="news">
         {url && <h4><a href="#a" onClick={() => link(url)}>{n.title}</a></h4>}
         {!url && <h4>{n.title}</h4>}
-        {(newsIndex > 0) && <a href="#a" className="link" id="prevNews" onClick={() => this.setState({...this.state, newsIndex: this.state.newsIndex - 1})}>{'<'}</a>}
-        {(newsIndex < allNews.length - 1) && <a href="#a" className="link" id="nextNews" onClick={() => this.setState({...this.state, newsIndex: this.state.newsIndex + 1})}>{'>'}</a>}
+        <div id="news-pagination">
+          {(newsIndex > 0) && <a href="#a" className="link" id="prevNews" onClick={() => this.setState({...this.state, newsIndex: this.state.newsIndex - 1})}>{'<'}</a>}
+          {(newsIndex < allNews.length - 1) && <a href="#a" className="link" id="nextNews" onClick={() => this.setState({...this.state, newsIndex: this.state.newsIndex + 1})}>{'>'}</a>}
+        </div>
         <div id="news-text">
           {n.message}
         </div>
@@ -53,6 +55,7 @@ export default class Main extends Component {
     return (
       <div id="main-container">
         {this.renderNews()}
+        <div className="clear">&nbsp;</div>
         {userStore.positions.length && <Table />}
         {userStore.watchlist.length && <div>
           <h1>Watchlist</h1>

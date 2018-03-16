@@ -26,3 +26,4 @@ dist
 
 img.png
 /src/helpers/firebase.js
+admin.js

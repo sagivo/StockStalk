@@ -43,7 +43,7 @@ export default class Stock extends Component {
       const stock = new rh.Stock(this.state.stock.symbol);
 
       const res = await stock.getQuotes(options);
-      const data = res.historicals.map(d => [new Date(d['begins_at']).getTime(), parseFloat(d['close_price'])]);
+      const data = res.historicals.map(d => [new Date(d['begins_at']).getTime(), parseFloat(d['close_price'])]).reverse();
       const config = {
         time: {timezoneOffset: 0},
         rangeSelector: {
