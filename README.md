@@ -45,7 +45,7 @@ yarn publish
 
 ## Donate
 The best donation is by submiting a PR and improving the code.  
-Alternatively, you can just [buy be a coffee](https://www.buymeacoffee.com/sagivo)
+Alternatively, you can just [buy me a coffee](https://www.buymeacoffee.com/sagivo)
 
 
 
