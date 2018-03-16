@@ -4,6 +4,7 @@ html {
 }
 html body {
   font-family: Montserrat, sans-serif;
+  min-width: 650px;
 }
 html body input[type=submit],
 html body button {
@@ -89,6 +90,28 @@ html body h1 {
   margin: 0;
   padding: 0;
   height: 0;
+}
+#main-container #news {
+  text-align: center;
+  font-size: 12px;
+  padding: 10px;
+  background-color: #21ce99;
+  color: #fff;
+}
+#main-container #news #news-text {
+  margin: 0 20px;
+}
+#main-container #news a {
+  color: #fff;
+}
+#main-container #news .link {
+  position: relative;
+}
+#main-container #news #prevNews {
+  float: left;
+}
+#main-container #news #nextNews {
+  float: right;
 }
 #properties-table {
   margin: 0;

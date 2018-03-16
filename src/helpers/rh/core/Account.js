@@ -14,6 +14,10 @@ export default class Account {
     return Request.getPersonal('positions');
   }
 
+  get news() {
+    return Request.getPersonal('midlands/notifications/stack');
+  }
+
   get accounts() {
     return Request.getPersonal('accounts');
   }
