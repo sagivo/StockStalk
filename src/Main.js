@@ -54,7 +54,6 @@ export default class Main extends Component {
 
     return (
       <div id="main-container">
-        {this.renderNews()}
         <div className="clear">&nbsp;</div>
         {userStore.positions.length && <Table />}
         {userStore.watchlist.length && <div>

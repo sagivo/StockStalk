@@ -243,39 +243,39 @@ html body h1 {
 #stock #stock-news {
   margin-top: 40px;
 }
-#stock #stock-news .news-container {
-  padding: 20px 0;
-}
-#stock #stock-news .left-img {
+#stock #stock-news .news-container .left-img {
   width: 20%;
   float: left;
 }
-#stock #stock-news .left-img img {
+#stock #stock-news .news-container .left-img img {
   width: 100%;
 }
-#stock #stock-news .stock-news-story {
+#stock #stock-news .news-container .stock-news-story {
   float: right;
   width: 80%;
   padding-left: 20px;
   text-align: left;
 }
-#stock #stock-news .stock-news-story h5 {
+#stock #stock-news .news-container .stock-news-story h5 {
   font-size: 12px;
   margin: 0;
 }
-#stock #stock-news .stock-news-story h5 .time {
+#stock #stock-news .news-container .stock-news-story h5 .time {
   color: #040d14;
 }
-#stock #stock-news .stock-news-story h4 {
+#stock #stock-news .news-container .stock-news-story h4 {
   font-size: 14px;
   margin: 0;
 }
-#stock #stock-news .stock-news-story h4 a {
+#stock #stock-news .news-container .stock-news-story h4 a {
   color: #21ce99;
 }
-#stock #stock-news .stock-news-story .summary {
+#stock #stock-news .news-container .stock-news-story .summary {
   color: #040d14;
   font-size: 12px;
+}
+#stock #stock-news .clear {
+  padding: 10px;
 }
 #orders button {
   border-radius: 20px;
