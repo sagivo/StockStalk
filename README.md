@@ -8,9 +8,7 @@ Built on top of Electron and React, allows you to build a version for Mac, Windo
 
 # Downloads
 
-[Download Robinhood for Mac](https://stockstalk.club/robinhood-mac).  
-[Download Robinhood for Windows](https://www.stockstalk.club/robinhood-windows).  
-[Download Robinhood for Linux](https://www.stockstalk.club/robinhood-linux).  
+[Download Robinhood for Mac, Windows and Linux](https://github.com/sagivo/StockStalk/releases).  
 
 ## Stack
 
